@@ -2,36 +2,61 @@ const root = document.documentElement;
 
 // ---------- Screenshot viewer: each project cover opens all its screenshots ----------
 const viewer = document.getElementById('viewer');
-const viewerImg = viewer.querySelector('img');
+const viewerFrame = viewer.querySelector('.viewer-frame');
+const viewerImg = viewer.querySelector('.viewer-frame img');
 const viewerCaption = viewer.querySelector('figcaption');
 const viewerCount = viewer.querySelector('.viewer-count');
 const viewerPrev = viewer.querySelector('.viewer-prev');
 const viewerNext = viewer.querySelector('.viewer-next');
+const viewerThumbs = viewer.querySelector('.viewer-thumbs');
 let shots = [];
 let shotIndex = 0;
+
+// Portrait screenshots get the phone frame, landscape ones the screen frame
+viewerImg.addEventListener('load', () => {
+  viewerFrame.classList.toggle('is-phone', viewerImg.naturalHeight > viewerImg.naturalWidth);
+  viewerFrame.classList.remove('is-loading');
+});
 
 function showShot(i) {
   shotIndex = (i + shots.length) % shots.length;
   const fig = shots[shotIndex];
   const img = fig.querySelector('img');
+  viewerFrame.classList.add('is-loading');
   viewerImg.src = img.getAttribute('src');
   viewerImg.alt = img.alt;
   viewerCaption.innerHTML = fig.querySelector('figcaption').innerHTML;
   viewerCount.textContent = `${shotIndex + 1} / ${shots.length}`;
+  viewerThumbs.querySelectorAll('button').forEach((b, n) => {
+    b.setAttribute('aria-current', String(n === shotIndex));
+    if (n === shotIndex) b.scrollIntoView({ block: 'nearest', inline: 'center' });
+  });
+}
+
+function buildThumbs() {
+  viewerThumbs.replaceChildren(...shots.map((fig, n) => {
+    const b = document.createElement('button');
+    const img = fig.querySelector('img');
+    b.setAttribute('aria-label', img.alt);
+    b.innerHTML = `<img src="${img.getAttribute('src')}" alt="">`;
+    b.addEventListener('click', () => showShot(n));
+    return b;
+  }));
 }
 
 document.querySelectorAll('[data-shots]').forEach((button) => {
   button.addEventListener('click', () => {
     shots = [...button.nextElementSibling.querySelectorAll('figure')];
-    showShot(0);
+    buildThumbs();
     viewer.showModal();
+    showShot(0);
   });
 });
 
 viewerPrev.addEventListener('click', () => showShot(shotIndex - 1));
 viewerNext.addEventListener('click', () => showShot(shotIndex + 1));
 viewer.querySelector('.viewer-close').addEventListener('click', () => viewer.close());
-viewer.addEventListener('click', (e) => { if (e.target === viewer) viewer.close(); });
+viewer.addEventListener('click', (e) => { if (e.target === viewer || e.target.classList.contains('viewer-stage') || e.target.classList.contains('viewer-figure')) viewer.close(); });
 viewer.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft') showShot(shotIndex - 1);
   if (e.key === 'ArrowRight') showShot(shotIndex + 1);
