@@ -416,6 +416,9 @@ button.work-media.phones:hover .phone { transform: translateY(-6px); }
   display: none; flex-direction: column; align-items: center; gap: 12px;
 }
 .viewer[open] { display: flex; }
+/* A modal dialog blocks clicks but not scrolling: freeze the page behind it while it is open */
+html:has(.viewer[open]) { overflow: hidden; }
+.viewer { overscroll-behavior: contain; }
 .viewer::backdrop { background: rgb(5 8 8 / .92); backdrop-filter: blur(10px); }
 .viewer-top { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; }
 .viewer-count { font: 500 .85rem/1 var(--font-mono); color: rgb(255 255 255 / .65); letter-spacing: .05em; }
