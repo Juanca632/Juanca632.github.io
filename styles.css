@@ -467,7 +467,8 @@ html:has(.viewer[open]) { overflow: hidden; }
   background: var(--accent); box-shadow: 0 0 0 100vmax var(--accent); clip-path: inset(0 -100vmax);
 }
 .contact .section-head { margin-bottom: 8px; }
-.contact .eyebrow, .contact .section-lead { color: inherit; opacity: .85; }
+.contact .eyebrow, .contact .section-lead { color: inherit; }
+.contact :focus-visible { outline-color: var(--accent-contrast); }
 .contact .eyebrow::before { background: currentColor; }
 .contact h2 { margin-inline: auto; }
 .contact .section-lead { margin-inline: auto; }
@@ -480,8 +481,6 @@ html:has(.viewer[open]) { overflow: hidden; }
 .footer { padding-block: 32px 48px; color: var(--muted); font-size: .88rem; }
 .footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
 .footer p { margin: 0; }
-.built a { color: var(--accent); font-weight: 600; text-decoration: none; margin-left: 6px; white-space: nowrap; }
-.built a:hover { text-decoration: underline; }
 
 /* Scroll reveal: only applied by main.js to blocks still below the fold, never with reduced motion */
 .reveal-pending { opacity: 0; transform: translateY(24px); }

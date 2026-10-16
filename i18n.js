@@ -15,6 +15,7 @@ window.I18N_FR = {
   'hero.cta': 'Voir les projets',
   'hero.cv': 'Télécharger le CV',
   'hero.cvHref': 'assets/cv-fr.pdf',
+  'hero.email': 'E-mail',
 
   'about.title': "Ingénieur full stack, trois ans en production",
   'about.p1': "Ingénieur full stack avec <strong>3 ans d'expérience</strong> sur des applications en production. Ce que je préfère, c'est <span class='hl'>transformer une idée en quelque chose de concret</span> : je la conçois, je la développe de bout en bout, je la mets entre les mains des utilisateurs et je continue à l'améliorer.",
@@ -26,8 +27,8 @@ window.I18N_FR = {
   'facts.languagesValue': 'Espagnol (natif) · Français, anglais, portugais (C1) · Italien (B1)',
   'facts.looking': 'Recherche',
   'facts.lookingValue': 'CDI · Île-de-France, ouvert à la mobilité',
-  'facts.work': 'Autorisation de travail',
-  'facts.workValue': 'Autorisé à travailler en France · aucune démarche de visa',
+  // 'facts.work': 'Autorisation de travail',
+  // 'facts.workValue': 'Autorisé à travailler en France · aucune démarche de visa',
 
   'ai.title': "L'IA à chaque étape, le jugement aussi",
   'ai.lead': "J'utilise des agents IA pour aller plus vite, jamais pour moins réfléchir. Ils participent à chaque étape, et je reste responsable de ce qui est livré.",
@@ -66,7 +67,7 @@ window.I18N_FR = {
   'stack.title': 'Les outils de mon quotidien',
   'stack.ai': 'IA et agents',
   'stack.infra': 'Infra et cloud',
-  'stack.quality': 'Qualité et CI/CD',
+  'stack.quality': 'Qualité, CI/CD et méthodes',
 
   'projects.title': 'Projets sélectionnés',
   'projects.code': 'Code ↗',
@@ -90,7 +91,6 @@ window.I18N_FR = {
 
   'gallery.close': 'Fermer',
   'footer.built': "Conçu et développé avec Claude Code, comme tout ce que je construis.",
-  'footer.source': 'Voir le code ↗',
   'gallery.label': 'Captures d’écran',
   'contact.cv': 'CV (PDF) ↗',
   'contact.title': 'Parlons-en',

@@ -17,6 +17,7 @@ viewerImg.addEventListener('load', () => {
   viewerFrame.classList.toggle('is-phone', viewerImg.naturalHeight > viewerImg.naturalWidth);
   viewerFrame.classList.remove('is-loading');
 });
+viewerImg.addEventListener('error', () => viewerFrame.classList.remove('is-loading'));
 
 function showShot(i) {
   shotIndex = (i + shots.length) % shots.length;
@@ -63,7 +64,7 @@ viewer.addEventListener('keydown', (e) => {
 });
 // Swipe on touch screens
 let touchX = null;
-viewer.addEventListener('touchstart', (e) => { touchX = e.touches[0].clientX; }, { passive: true });
+viewer.addEventListener('touchstart', (e) => { touchX = e.target.closest('.viewer-thumbs') ? null : e.touches[0].clientX; }, { passive: true });
 viewer.addEventListener('touchend', (e) => {
   if (touchX === null) return;
   const dx = e.changedTouches[0].clientX - touchX;
@@ -124,6 +125,9 @@ langToggle.addEventListener('click', () => {
   lang = lang === 'fr' ? 'en' : 'fr';
   applyLang(lang);
   try { localStorage.setItem('lang', lang); } catch (e) {}
+  // Drop ?lang= so a reload keeps this choice instead of the link's language
+  const url = new URL(location.href);
+  if (url.searchParams.has('lang')) { url.searchParams.delete('lang'); history.replaceState(null, '', url); }
 });
 
 // ---------- Theme: remembers the visitor's choice; otherwise follows the system ----------
@@ -148,7 +152,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 // ---------- Scroll reveal: blocks below the fold fade up once when they come into view ----------
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-  const targets = document.querySelectorAll('.section-head, .about, .steps, .card, .job, .stack-row, .work, .contact .btn');
+  const targets = document.querySelectorAll('.section-head, .about, .flow-box, .card, .job, .stack-row, .work, .contact .btn');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
